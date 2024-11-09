@@ -7,8 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostListComponent } from './post-list/post-list.component';
-import { PostAddComponent } from './post-add/post-add.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     UploadFileComponent,
     PostDetailsComponent,
     PostListComponent,
-    PostAddComponent
+
   ],
   imports: [
     BrowserModule,
@@ -25,6 +25,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     FormsModule,
     ReactiveFormsModule,
     CKEditorModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

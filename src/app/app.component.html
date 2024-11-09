@@ -1,53 +1,117 @@
-<!-- src/app/reservation/reservation.component.html -->
-<div class="container">
-  <h1>Reservations</h1>
-  
-  <!-- Table to display reservations -->
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID Reservation</th>
-        <th>Academic Year</th>
-        <th>Status</th>
-        <th>Actions</th> <!-- Added actions column -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let reservation of reservations">
-        <td>{{ reservation.idReservation }}</td>
-        <td>{{ reservation.anneeUniversitaire | date: 'yyyy-MM-dd' }}</td>
-        <td>{{ reservation.estValide ? 'Valid' : 'Invalid' }}</td>
-        <td>
-          <button
-            class="btn btn-danger"
-            (click)="deleteReservation(reservation.idReservation!)" 
-            *ngIf="reservation.idReservation"> <!-- Show button only if idReservation is defined -->
-            Delete
-          </button>
-        </td>
-        
-      </tr>
-    </tbody>
-  </table>
+<body>
+  <div class="main-wrapper">
+      <div class="page-content instructor-page-content">
+          <div class="container">
+              <div class="row">
 
-  <!-- Add reservation form -->
-  <h2>Add Reservation</h2>
-  <form (ngSubmit)="addReservation()">
-    <div class="form-group">
-      <label for="idReservation">Id</label>
-      <input type="text" class="form-control" id="anneeUniversitaire" [(ngModel)]="newReservation.idReservation" name="idReservation" required>
-    </div>
-    <div class="form-group">
-      <label for="anneeUniversitaire">Academic Year</label>
-      <input type="date" class="form-control" id="anneeUniversitaire" [(ngModel)]="newReservation.anneeUniversitaire" name="anneeUniversitaire" required>
-    </div>
-    <div class="form-group">
-      <label for="estValide">Status</label>
-      <select class="form-control" id="estValide" [(ngModel)]="newReservation.estValide" name="estValide" required>
-        <option [value]="true">Valid</option>
-        <option [value]="false">Invalid</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Add Reservation</button>
-  </form>
-</div>
+                  <div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+                      <div class="settings-widget dash-profile">
+                          <div class="settings-menu p-0">
+                              <div class="profile-bg">
+                                  <h5>Beginner</h5>
+                                  <img src="/src/img/instructor-profile-bg.jpg" alt>
+                                  <div class="profile-img">
+                                      <a href="instructor-profile.html"><img src="/src/img/user/user15.jpg" alt></a>
+                                  </div>
+                              </div>
+                              
+                              <div class="profile-group">
+                                  <div class="profile-name text-center">
+                                      <h4><a href="instructor-profile.html">Jenny Wilson</a></h4>
+                                      <p>Instructor</p>
+                                  </div>
+                                  <div class="go-dashboard text-center">
+                                      <a routerLink="/addPost" class="btn btn-primary">Create New Post</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="settings-widget account-settings">
+                          <div class="settings-menu">
+                              <h3>DASHBOARD</h3>
+                              <ul>
+
+                                  <li class="nav-item active">
+                                      <a routerLink="/listPost" class="nav-link">
+                                          <i class="feather-book"></i> My Posts
+                                      </a>
+                                  </li>
+                            
+                                
+                              </ul>
+                             
+                          </div>
+                      </div>
+                  </div>
+
+
+
+                  <div class="col-xl-9 col-lg-8 col-md-12">
+
+                      <div class="card settings-inner-blk p-0">
+                          <div class="widget-set sell-course-head comman-space">
+                              <!-- ... Remaining HTML content ... -->
+                              <div class="widget-content multistep-form">
+                                  <div class="widget-content multistep-form">
+                                      <form [formGroup]="Postsaveform" (submit)="savePost()">
+                                          <fieldset id="first">
+                                              <div class="add-course-info">
+                                                  <div class="add-course-inner-header">
+                                                      <h4>Basic Information</h4>
+                                                  </div>
+                                                  <div class="add-course-form">
+                                                      <div class="input-block">
+                                                          <label class="add-course-label">Post
+                                                              </label>
+                                                          
+                                                      </div>
+                                                      <div class="input-block">
+                                                          <label class="add-course-label">Post
+                                                              Domain</label>
+                                                          <input type="text" class="form-control"
+                                                              placeholder="Blog Domain" formControlName="domaine"
+                                                              name="domain" required>
+                                                      </div>
+                                                      <div class="input-block">
+                                                          <label class="add-course-label">Post
+                                                              Content</label>
+                                                         
+                                                              <ckeditor [editor]="Editor" formControlName="contenu" name="contenu"></ckeditor>
+                                                      </div>
+
+                                                      
+
+
+
+
+                                                      <!-- <div class="input-block mb-0">
+                                                          <label class="add-course-label">Blog Content</label>
+                                                          <ckeditor [editor]="Editor" [config]="{ toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']}" 
+                                                          formControlName="contenu"></ckeditor>
+                                                        </div> -->
+
+
+                                                  </div>
+                                                  <div class="widget-btn">
+                                                      <a class="btn btn-black">Back</a>
+                                                      <button type="submit"
+                                                          class="btn btn-info-light">Continue</button>
+                                                  </div>
+                                              </div>
+                                          </fieldset>
+                                      </form>
+                                      
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+
+</body>

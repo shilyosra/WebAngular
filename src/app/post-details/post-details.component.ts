@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Post } from '../models/post';
 
 
+
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
