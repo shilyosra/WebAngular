@@ -9,7 +9,7 @@ import { Interactions } from '../models/interactions';
 })
 export class PostService {
 
-  private baseUrl='http://localhost:8282/post'
+  private baseUrl='http://localhost:9000/post'
 
   constructor(private http:HttpClient) { }
   getPostList(): Observable<any> {  
@@ -37,15 +37,13 @@ export class PostService {
   updatePost(id: string, post: Post): Observable<Object> {  
     return this.http.put(`${this.baseUrl}/modifierPost/${id}`, post);  
   }  
-
-  uploadPhoto(id: string, file: File): Observable<any> {
-    const uploadUrl = `${this.baseUrl}/upload/${id}`;
-
-    const formData: FormData = new FormData();
-    formData.append('photo', file, file.name);
-
-    return this.http.post(uploadUrl, formData);
+  uploadPhoto(idPost: string, formData: FormData) {
+    return this.http.post(`http://localhost:9000/post/upload/${idPost}`, formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
+  
   downloadFile(fileName: string): Observable<Blob> {
     const url = `${this.baseUrl}/download/${fileName}`;
     return this.http.get(url, { responseType: 'blob' });

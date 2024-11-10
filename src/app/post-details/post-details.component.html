@@ -1,162 +1,84 @@
-<section class="course-content">
+<section class="course-content">  
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-md-12">
-
+                <!-- Post Content -->
                 <div class="post" *ngIf="post">
-                    <div class="post-image">
-                        <a [routerLink]="['/detailsPost/', post.idPost]"><img class="img-fluid" *ngIf="post"
-                                [src]="getPostPhotoUrl(post.image)" alt="Post Image"></a>
+                    <div class="post-photo">
+                        <a [routerLink]="['/detailsPost/', post.idPost]">
+                            <img class="img-fluid" *ngIf="post" [src]="getPostPhotoUrl(post.photo)" alt="Post photo">
+                        </a>
                     </div>
-                    <div class="blog-info clearfix">
-                        <div class="post-left">
-                            <ul>
-                                <li>
-                                    <div class="post-author">
-                                        <span>Ruby Perrin</span>
-                                    </div>
-                                </li>
-                                <li><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt>{{post.datePost}}
-                                </li>
-                                <li><img class="img-fluid" src="assets/img/icon/icon-23.svg" alt>{{post.content}}</li>
-
-                            </ul>
-                        </div>
+                    <div class="blog-info">
+                        <ul class="post-meta">
+                            <li><img src="assets/img/icon/icon-22.svg" alt="Date">{{post.datePost}}</li>
+                            <li><img src="assets/img/icon/icon-23.svg" alt="Content">{{post.content}}</li>
+                        </ul>
                     </div>
-                   
-                    <div class="blog-content" *ngIf="interaction">
+                    <div class="blog-content">
                         <div [innerHTML]="post.content"></div>
-                        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
-                            rel="stylesheet">
-                        <div class="container bootdey">
-                        </div>
-                        <div _ngcontent-urt-c9="" class="student-widget message-student-widget">
-                        </div>
                     </div>
                 </div>
 
-
-                <div _ngcontent-urt-c9="" class="student-widget-group"
-                    style="border: solid;border-width: thin;border-color: lightgray">
-                    <div _ngcontent-urt-c9="" class="col-md-12">
-                        <div _ngcontent-urt-c9="" class="add-compose" style="font-family: 'Inter'; font-size: 20px;"><a
-                                _ngcontent-urt-c9="" href="javascript:void(0);">
-                                Commentaires</a></div>
+                <!-- Post Edit Form -->
+                <form [formGroup]="Postsaveform" (ngSubmit)="savePost()" class="post-form">
+                    <div class="input-block">
+                        <label for="content">Post Content</label>
+                        <ckeditor [editor]="Editor" formControlName="content" name="content"></ckeditor>
                     </div>
-                    <div _ngcontent-urt-c9="" class="col-md-12">
-                        <div _ngcontent-urt-c9="" class="chat-window">
-                            <div _ngcontent-urt-c9="" class="chat-cont-right" style="border: none;">
-                                <div _ngcontent-urt-c9="" class="chat-body" *ngFor="let comment of comments">
-                                    <div _ngcontent-urt-c9="">
+                    <!-- Add other form controls here if needed -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                      
+                    </div>
+                </form>
 
-                                        <ul _ngcontent-urt-c9="" class="list-unstyled">
-                                            <li _ngcontent-urt-c9="" class="media received d-flex">
+                <!-- Comment Section -->
+                <div class="comments-section">
+                    <h3>Commentaires</h3>
+                    <div class="comment-list" *ngFor="let comment of comments">
+                        <div class="comment">
+                            <div class="comment-author">
+                                <img src="/assets/img/user/user1.jpg" alt="User Image" class="author-image">
+                                <span>Yosra Shil</span>
+                            </div>
+                            <div class="comment-text">
+                                <p>{{comment.commentaire}}</p>
+                            </div>
+                            <div class="comment-actions">
+                                <span (click)="toggleReplyInput(comment.id)">Reply</span>
+                            </div>
 
-                                                <div _ngcontent-urt-c9="" class="media-body flex-grow-1">
-                                                    <div _ngcontent-urt-c9="" class="msg-box">
-                                                        <div class="about-instructor" style="background-color: unset;">
-                                                            <div class="abt-instructor-img">
-                                                                <a href="instructor-profile.html"><img
-                                                                        src="/assets/img/user/user1.jpg" alt="img"
-                                                                        class="img-fluid"></a>
-                                                            </div>
+                            <!-- Reply Input -->
+                            <div class="reply-input" *ngIf="showReplyInput[comment.id]">
+                                <form (ngSubmit)="addReply(comment.id)">
+                                    <input type="text" [(ngModel)]="replyText" name="replyText" placeholder="Ecrire votre reponse ici..." class="reply-field">
+                                    <button type="submit" class="send-btn">Send</button>
+                                </form>
+                            </div>
 
-                                                        </div>
-                                                        <div _ngcontent-urt-c9="" class="msg-bg"
-                                                            style="background-color: #2d7ccc;">
-
-                                                            <div class="instructor-detail">
-                                                                <p><a style="font-size: small;color: white;">Yosra Shil</a></p>
-                                                            </div>
-                                                            <p _ngcontent-urt-c9="" style="color: white;">{{comment.commentaire}}</p>
-
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="chat-time" style="font-size: smaller;cursor: pointer;">
-                                                        <span (click)="toggleReplyInput(comment.id)">Reply</span>
-                                                    </div>
-                                                    <div class="chat-window">
-                                                        <div class="chat-cont-right"
-                                                            style="border-top-width: 0px;border-left-width: 0px;border-bottom-width: 0px;border-right-width: 0px;"
-                                                            *ngIf="showReplyInput[comment.id]">
-                                                            <div class="chat-footer">
-                                                                <div class="input-group">
-                                                                    <form (ngSubmit)="addReply(comment.id)"
-                                                                        style="display: inline-flex;">
-                                                                        <input _ngcontent-urt-c9="" type="text"
-                                                                            class="input-msg-send form-control"
-                                                                            name="reply" [(ngModel)]="replyText"
-                                                                            placeholder="ecrire votre reponse ici..."
-                                                                            style="margin-right: 5rem;">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary msg-send-btn rounded-pill"><img
-                                                                                src="/assets/img/send-icon.svg"
-                                                                                alt="interaction"></button>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div *ngIf="comment.replay && comment.replay.length > 0">
-
-                                                        <div class="comman-space bdr-bottom-line"
-                                                            *ngFor="let reply of comment.replay">
-
-                                                            <div class="instructor-wrap border-0 m-0"
-                                                                style="display: inline-flex;">
-                                                                <div class="about-instructor">
-                                                                    <div class="abt-instructor-img">
-                                                                        <a href="instructor-profile.html"><img
-                                                                                src="/assets/img/user/user.jpg"
-                                                                                alt="img" class="img-fluid"></a>
-                                                                    </div>
-
-                                                                </div>
-                                            <li class="media received d-flex">
-                                                <div class="media-body flex-grow-1">
-                                                    <div class="msg-box">
-                                                        <div class="msg-bg" style="background-color: #476787;">
-                                                            <div class="instructor-detail">
-                                                                <p><a style="font-size: small; color: white;">Kaycer Khouini</a></p>
-                                                            </div>
-                                                            <p style="color: white;"> {{reply.commentaire}}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
+                            <!-- Display Replies -->
+                            <div class="replies" *ngIf="comment.replay && comment.replay.length > 0">
+                                <div class="reply" *ngFor="let reply of comment.replay">
+                                    <div class="reply-author">
+                                        <img src="/assets/img/user/user.jpg" alt="User Image" class="author-image">
+                                        <span>Kaycer Khouini</span>
+                                    </div>
+                                    <div class="reply-text">
+                                        <p>{{reply.commentaire}}</p>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        </li>
-
-
-
-                        </ul>
                     </div>
 
-                </div>
-                <div _ngcontent-urt-c9="" class="chat-footer">
-                    <div _ngcontent-urt-c9="" class="input-group">
-                        <div _ngcontent-urt-c9="" class="btn-file btn"><i _ngcontent-urt-c9=""
-                                class="fa fa-paperclip"></i><input _ngcontent-urt-c9="" type="file">
-                        </div><input _ngcontent-urt-c9="" type="text" placeholder="ecrire votre commentaire ici..."
-                            [(ngModel)]="interaction.commentaire" class="input-msg-send form-control"><button
-                            _ngcontent-urt-c9="" (click)="addInteraction()" type="submit"
-                            class="btn btn-primary msg-send-btn rounded-pill"><img src="/assets/img/send-icon.svg"
-                                alt="interaction"></button>
+                    <!-- Add Comment -->
+                    <div class="add-comment">
+                        <input type="text" [(ngModel)]="interaction.commentaire" name="commentaire" placeholder="Ecrire votre commentaire ici..." class="comment-field">
+                        <button (click)="addInteraction()" class="send-btn">Send</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
 </section>

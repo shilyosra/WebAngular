@@ -17,7 +17,7 @@
                                 <div class="profile-group">
                                     
                                     <div class="go-dashboard text-center">
-                                        <a routerLink="/addBlog" class="btn btn-primary">Create New Post</a>
+                                        <a routerLink="/addPost" class="btn btn-primary">Create New Post</a>
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <ul>
 
                                     <li class="nav-item active">
-                                        <a routerLink="/listBlog" class="nav-link">
+                                        <a routerLink="/listPost" class="nav-link">
                                             <i class="feather-book"></i> My Posts
                                         </a>
                                     </li>
@@ -63,7 +63,7 @@
                                                             <div class="relative-form">
 
                                                                 <div *ngIf="selectedFile">
-                                                                    <span>{{selectedFile?.name}}</span>
+                                                                    <span>{{selectedFile.name}}</span>
                                                                 </div>
                                                                 <label class="relative-file-upload">
                                                                     Upload File <input type="file"
@@ -76,8 +76,8 @@
                                                 </div>
                                                 <div class="widget-btn">
                                                     <a class="btn btn-black prev_btn">Previous</a>
-                                                    <a (click)="onUpload()"
-                                                        class="btn btn-info-light next_btn">Continue</a>
+                                                    <button (click)="onUpload()"
+                                                        class="btn btn-info-light next_btn">Continue</button>
                                                 </div>
                                             </div>
                                         </form>

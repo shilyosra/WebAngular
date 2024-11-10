@@ -50,7 +50,7 @@ export class PostListComponent implements OnInit{
     this.sortPosts();
   }
   getPostPhotoUrl(post: Post): string {
-    return this.postService.getPhoto(post.image);
+    return this.postService.getPhoto(post.photo);
   }
   deletePost(post: Post): void {
 
@@ -66,9 +66,12 @@ export class PostListComponent implements OnInit{
   navigateToAddPost() {
     this.router.navigate(['/addPost']);
   }
+ 
   onSearch(): void {
-    console.log('Search Input:', this.searchInput);
-    
+    this.filteredPosts = this.posts.filter(post =>
+      post.datePost?.toLowerCase().includes(this.searchInput.toLowerCase())
+    );
+    console.log('Filtered Posts:', this.filteredPosts);
   }
 }
 

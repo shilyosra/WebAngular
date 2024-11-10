@@ -9,6 +9,8 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { RouterModule } from '@angular/router';
+import { PostUpdateComponent } from './post-update/post-update.component';
+import { PostAddComponent } from './post-add/post-add.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { RouterModule } from '@angular/router';
     UploadFileComponent,
     PostDetailsComponent,
     PostListComponent,
+    PostUpdateComponent,
+    PostAddComponent,
 
   ],
   imports: [

@@ -36,25 +36,24 @@ export class UploadFileComponent implements OnInit {
 
   onUpload(): void {
     if (this.selectedFile) {
-      // Use the BlogService to upload the file
-      console.log(this.idPost);
-  
-      this.postService.uploadPhoto(this.idPost, this.selectedFile).subscribe(
+      const formData = new FormData();
+      formData.append('photo', this.selectedFile); // 'photo' correspond au @RequestParam("photo") dans le backend
+      
+      this.postService.uploadPhoto(this.idPost, formData).subscribe(
         (event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
-            // const percentDone = Math.round((100 * event.loaded) / event.total);
-            // console.log(`File is ${percentDone}% uploaded.`);
+            // Gestion de la progression de l'upload
           } else if (event instanceof HttpResponse) {
-            console.log('File is completely uploaded!', event);           
+            console.log('File is completely uploaded!', event);
+            this.router.navigateByUrl(`/listPost`);
           }
-          this.router.navigateByUrl(`/listBlog`);
         },
         (error: any) => {
-          console.error('Error uploading file:', error);          
+          console.error('Error uploading file:', error);
         }
       );
-      
     }
   }
+  
   
 }

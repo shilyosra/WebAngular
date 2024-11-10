@@ -13,66 +13,7 @@ import { PostService } from './services/post.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  Postsaveform = new FormGroup({
-    
-    datePost: new FormControl(),
-    
-    content: new FormControl()
-  });
+export class AppComponent {
 
-  post: Post = {
-    idPost: '',
-    datePost: '',
-    content: '',
-    image: '',
-    interactions:[],
-    
-  };
-  submitted = false;
-  public Editor = ClassicEditor as any;
-
-  constructor(private postService: PostService, private router: Router) { }
-
-  savePost(): void {
-    if (this.Postsaveform.invalid) {
-      return;
-    }
-
-    const data = {
-      
-      datePost: this.Postsaveform.get('datePost')!.value,
-      
-      content: this.Postsaveform.get('content')!.value
-    };
-
-    this.postService.createPost(data).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.submitted = true;
-        this.router.navigateByUrl(`/upload/${res.idPost}`);
-        console.log("ahawa: ", res.idPost);
-      },
-      error: (e) => console.error(e)
-    });
-  }
-
-  newPost(): void {
-    this.submitted = false;
-    this.post = {
-      idPost: '',
-      datePost: '',
-      content: '',
-      image: '',
-      interactions:[],
   
-    };
-  }
-
-  ngOnInit(): void {
-  }
 }
-
-
-
-
